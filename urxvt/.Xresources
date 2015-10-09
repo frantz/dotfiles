@@ -1,0 +1,32 @@
+URxvt*depth: 32
+URxvt*dynamicColors: true
+
+! URxvt*font: xft:Sauce Code Powerline:size=10
+URxvt*font: xft:Droid Sans Mono Slashed for Powerline:size=12
+
+URxvt*scrollBar: False
+
+
+URxvt*perl-ext-common: font-size,clipboard,tabbedex
+
+! Changing font size on the fly
+  URxvt*keysym.C-Up:     perl:font-size:increase
+  URxvt*keysym.C-Down:   perl:font-size:decrease
+  URxvt*keysym.C-S-Up:   perl:font-size:incglobal
+  URxvt*keysym.C-S-Down: perl:font-size:decglobal
+
+! copy/paste
+  URxvt*keysym.Shift-Control-V: perl:clipboard:paste
+  URxvt*keysym.Shift-Control-C: perl:clipboard:copy
+
+! tabbedex config
+URxvt.tabbed.autohide: true
+URxvt.tabbed.reopen-on-close: yes
+
+URxvt.keysym.Control-t: perl:tabbedex:new_tab
+URxvt.keysym.Control-Tab: perl:tabbedex:next_tab
+
+URxvt*iso14755: False
+URxvt*iso14755_52: False
+
+#include "/home/frantz/.colors/solarized_dark.xresources"
