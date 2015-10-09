@@ -6,7 +6,7 @@ URxvt*font: xft:Droid Sans Mono Slashed for Powerline:size=12
 
 URxvt*scrollBar: False
 
-
+! yaourt -S urxvt-tabbedex urxvt-font-size-git
 URxvt*perl-ext-common: font-size,clipboard,tabbedex
 
 ! Changing font size on the fly
