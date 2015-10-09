@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/frantz'
+let g:netrw_dirhist_2='/home/frantz/.gnome2'
+let g:netrw_dirhist_3='/home/frantz/.gnome2/cheese'
+let g:netrw_dirhist_4='/home/frantz/.gnome2/cheese/media'
+let g:netrw_dirhist_5='/home/frantz/src/simplemail-v2'
+let g:netrw_dirhist_6='/home/frantz/src/simplemail-v2/app'
+let g:netrw_dirhist_7='/home/frantz/src/simplemail-v2/app/packages'
+let g:netrw_dirhist_8='/home/frantz/src/simplemail-v2/app/packages/npm-container'
+let g:netrw_dirhist_9='/home/frantz/src/simplemail-v2'
