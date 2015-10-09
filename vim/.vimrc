@@ -26,6 +26,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'sjl/gundo.vim'
+" pacman -S the_silver_searcher
 Plugin 'rking/ag.vim'
 Plugin 'bling/vim-airline'
 Plugin 'pangloss/vim-javascript'
