@@ -85,7 +85,7 @@ export TERM=rxvt-unicode-256color
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias gti=git
 
-# Keychain to remember ssh passphrase
+# Keychain to remember ssh passphrase: pacman -S keychain
 eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
 
 # key bindings
