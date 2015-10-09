@@ -1,0 +1,9 @@
+[alias]
+	co = checkout
+	st = status
+	ci = commit
+[user]
+	name = Frantz Gauthier
+	email = frantz@myentropy.org
+[push]
+	default = simple
