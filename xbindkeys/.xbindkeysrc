@@ -1,0 +1,13 @@
+# Increase volume
+"pamixer --increase 5"
+   XF86AudioRaiseVolume
+# Decrease volume
+"pamixer --decrease 5"
+   XF86AudioLowerVolume
+# Mute volume
+"pactl set-sink-mute 1 toggle"
+   XF86AudioMute
+"xbacklight -dec 40"
+   XF86MonBrightnessDown
+"xbacklight -inc 40"
+   XF86MonBrightnessUp
