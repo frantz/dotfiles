@@ -6,8 +6,8 @@ URxvt*font: xft:Droid Sans Mono Slashed for Powerline:size=12
 
 URxvt*scrollBar: False
 
-! yaourt -S urxvt-tabbedex urxvt-font-size-git
-URxvt*perl-ext-common: font-size,clipboard,tabbedex
+! yaourt -S urxvt-tabbedex urxvt-font-size-git urxvt-perls-git
+URxvt*perl-ext-common: default,clipboard,font-size,tabbedex
 
 ! Changing font size on the fly
   URxvt*keysym.C-Up:     perl:font-size:increase
@@ -18,6 +18,7 @@ URxvt*perl-ext-common: font-size,clipboard,tabbedex
 ! copy/paste
   URxvt*keysym.Shift-Control-V: perl:clipboard:paste
   URxvt*keysym.Shift-Control-C: perl:clipboard:copy
+  URxvt*clipboard.autocopy: true
 
 ! tabbedex config
 URxvt.tabbed.autohide: true
