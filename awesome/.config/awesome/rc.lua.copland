@@ -1,8 +1,8 @@
 --[[
-                                
-     Holo Awesome WM config 2.0 
-     github.com/copycat-killer  
-                                
+                               
+     Copland Awesome WM config 
+     github.com/copycat-killer 
+                               
 --]]
 
 -- {{{ Required libraries
@@ -15,6 +15,7 @@ local beautiful = require("beautiful")
 local naughty   = require("naughty")
 local drop      = require("scratchdrop")
 local lain      = require("lain")
+local eminent   = require("eminent")
 -- }}}
 
 -- {{{ Error handling
@@ -55,7 +56,7 @@ run_once("unclutter -root")
 -- {{{ Variable definitions
 
 -- beautiful init
-beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/holo/theme.lua")
+beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/copland/theme.lua")
 
 -- common
 modkey     = "Mod4"
@@ -69,21 +70,30 @@ browser    = "dwb"
 browser2   = "iron"
 gui_editor = "gvim"
 graphics   = "gimp"
-musicplr   = terminal .. " -e ncmpcpp "
+
+-- lain
+lain.layout.termfair.nmaster   = 3
+lain.layout.termfair.ncol      = 1
+lain.layout.centerfair.nmaster = 3
+lain.layout.centerfair.ncol    = 1
 
 local layouts = {
     awful.layout.suit.floating,
-    lain.layout.uselesstile,
     awful.layout.suit.fair,
-    lain.layout.uselesstile.left,
-    lain.layout.uselesstile.top
+    awful.layout.suit.tile,
+    lain.layout.uselessfair.horizontal,
+    lain.layout.uselesstile,
+    lain.layout.uselessfair,
+    lain.layout.termfair,
+    lain.layout.centerfair,
+    lain.layout.uselesspiral.dwindle
 }
 -- }}}
 
 -- {{{ Tags
 tags = {
-   names = { " WEB ", " TERMINAL ", " FILES ", " OTHER " },
-   layout = { layouts[1], layouts[3], layouts[2], layouts[4] }
+    names = { "start", "2", "3", "4", "5" },
+    layout = { layouts[1], layouts[2], layouts[3], layouts[4], layouts[5] }
 }
 for s = 1, screen.count() do
    tags[s] = awful.tag(tags.names, s, tags.layout)
@@ -101,32 +111,19 @@ end
 -- {{{ Menu
 mymainmenu = awful.menu.new({ items = require("menugen").build_menu(),
                               theme = { height = 16, width = 130 }})
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
 -- }}}
 
 -- {{{ Wibox
 markup = lain.util.markup
-blue   = "#80CCE6"
-space3 = markup.font("Tamsyn 3", " ")
-space2 = markup.font("Tamsyn 2", " ")
+blue   = beautiful.fg_focus
+red    = "#EB8F8F"
+green  = "#8FEB8F"
 
--- Clock
-mytextclock = awful.widget.textclock(markup("#FFFFFF", space3 .. "%H:%M" .. space2))
-clock_icon = wibox.widget.imagebox()
-clock_icon:set_image(beautiful.clock)
-clockwidget = wibox.widget.background()
-clockwidget:set_widget(mytextclock)
-clockwidget:set_bgimage(beautiful.widget_bg)
+-- Textclock
+mytextclock = awful.widget.textclock("<span font='Tamsyn 5'> </span>%H:%M ")
 
 -- Calendar
-mytextcalendar = awful.widget.textclock(markup("#FFFFFF", space3 .. "%d %b<span font='Tamsyn 5'> </span>"))
-calendar_icon = wibox.widget.imagebox()
-calendar_icon:set_image(beautiful.calendar)
-calendarwidget = wibox.widget.background()
-calendarwidget:set_widget(mytextcalendar)
-calendarwidget:set_bgimage(beautiful.widget_bg)
-lain.widgets.calendar:attach(calendarwidget, { fg = "#FFFFFF", position = "bottom_right" })
+lain.widgets.calendar:attach(mytextclock)
 
 --[[ Mail IMAP check
 -- commented because it needs to be set before use
@@ -136,153 +133,142 @@ mailwidget = lain.widgets.imap({
     mail     = "mail",
     password = "keyring get mail",
     settings = function()
-        mail_notification_preset.fg = "#FFFFFF"
         mail  = ""
         count = ""
 
         if mailcount > 0 then
-            mail = "Mail "
+            mail = "<span font='Tamsyn 5'> </span>Mail "
             count = mailcount .. " "
         end
 
-        widget:set_markup(markup(blue, mail) .. markup("#FFFFFF", count))
+        widget:set_markup(markup(blue, mail) .. count)
     end
 })
 ]]
 
 -- MPD
-mpd_icon = wibox.widget.imagebox()
-mpd_icon:set_image(beautiful.mpd)
-prev_icon = wibox.widget.imagebox()
-prev_icon:set_image(beautiful.prev)
-next_icon = wibox.widget.imagebox()
-next_icon:set_image(beautiful.nex)
-stop_icon = wibox.widget.imagebox()
-stop_icon:set_image(beautiful.stop)
-pause_icon = wibox.widget.imagebox()
-pause_icon:set_image(beautiful.pause)
-play_pause_icon = wibox.widget.imagebox()
-play_pause_icon:set_image(beautiful.play)
-
+mpdicon = wibox.widget.imagebox(beautiful.play)
 mpdwidget = lain.widgets.mpd({
-    settings = function ()
+    settings = function()
         if mpd_now.state == "play" then
-            mpd_now.artist = mpd_now.artist:upper():gsub("&.-;", string.lower)
-            mpd_now.title = mpd_now.title:upper():gsub("&.-;", string.lower)
-            widget:set_markup(markup.font("Tamsyn 4", " ")
-                              .. markup.font("Tamsyn 8",
-                              mpd_now.artist
-                              .. " - " ..
-                              mpd_now.title
-                              .. markup.font("Tamsyn 10", " ")))
-            play_pause_icon:set_image(beautiful.pause)
+            title = mpd_now.title
+            artist  = " - " .. mpd_now.artist  .. markup("#333333", " |<span font='Tamsyn 3'> </span>")
+            mpdicon:set_image(beautiful.play)
         elseif mpd_now.state == "pause" then
-            widget:set_markup(markup.font("Tamsyn 4", " ") ..
-                              markup.font("Tamsyn 8", "MPD PAUSED") ..
-                              markup.font("Tamsyn 10", " "))
-            play_pause_icon:set_image(beautiful.play)
+            title = "mpd "
+            artist  = "paused" .. markup("#333333", " |<span font='Tamsyn 3'> </span>")
+            mpdicon:set_image(beautiful.pause)
         else
-            widget:set_markup("")
-            play_pause_icon:set_image(beautiful.play)
+            title  = ""
+            artist = ""
+            mpdicon:set_image()
         end
+
+        widget:set_markup(markup(blue, title) .. artist)
     end
 })
-
-musicwidget = wibox.widget.background()
-musicwidget:set_widget(mpdwidget)
-musicwidget:set_bgimage(beautiful.widget_bg)
-musicwidget:buttons(awful.util.table.join(awful.button({ }, 1,
-function () awful.util.spawn_with_shell(musicplr) end)))
-mpd_icon:buttons(awful.util.table.join(awful.button({ }, 1,
-function () awful.util.spawn_with_shell(musicplr) end)))
-prev_icon:buttons(awful.util.table.join(awful.button({}, 1,
-function ()
-    awful.util.spawn_with_shell("mpc prev || ncmpc prev || pms prev")
-    mpdwidget.update()
-end)))
-next_icon:buttons(awful.util.table.join(awful.button({}, 1,
-function ()
-    awful.util.spawn_with_shell("mpc next || ncmpc next || pms next")
-    mpdwidget.update()
-end)))
-stop_icon:buttons(awful.util.table.join(awful.button({}, 1,
-function ()
-    play_pause_icon:set_image(beautiful.play)
-    awful.util.spawn_with_shell("mpc stop || ncmpc stop || pms stop")
-    mpdwidget.update()
-end)))
-play_pause_icon:buttons(awful.util.table.join(awful.button({}, 1,
-function ()
-    awful.util.spawn_with_shell("mpc toggle || ncmpc toggle || pms toggle")
-    mpdwidget.update()
-end)))
 
 -- Battery
-batwidget = lain.widgets.bat({
+baticon = wibox.widget.imagebox(beautiful.bat)
+batbar = awful.widget.progressbar()
+batbar:set_color(beautiful.fg_normal)
+batbar:set_width(55)
+batbar:set_ticks(true)
+batbar:set_ticks_size(6)
+batbar:set_background_color(beautiful.bg_normal)
+batmargin = wibox.layout.margin(batbar, 2, 7)
+batmargin:set_top(6)
+batmargin:set_bottom(6)
+batupd = lain.widgets.bat({
     settings = function()
-        bat_header = " Bat "
-        bat_p      = bat_now.perc .. " "
+       if bat_now.perc == "N/A" or bat_now.status == "Not present" then
+            bat_perc = 100
+            baticon:set_image(beautiful.ac)
+        elseif bat_now.status == "Charging" then
+            bat_perc = tonumber(bat_now.perc)
+            baticon:set_image(beautiful.ac)
 
-        if bat_now.status == "Not present" then
-            bat_header = ""
-            bat_p      = ""
+            if bat_perc >= 98 then
+                batbar:set_color(green)
+            elseif bat_perc > 50 then
+                batbar:set_color(beautiful.fg_normal)
+            elseif bat_perc > 15 then
+                batbar:set_color(beautiful.fg_normal)
+            else
+                batbar:set_color(red)
+            end
+        else
+            bat_perc = tonumber(bat_now.perc)
+
+            if bat_perc >= 98 then
+                batbar:set_color(green)
+            elseif bat_perc > 50 then
+                batbar:set_color(beautiful.fg_normal)
+                baticon:set_image(beautiful.bat)
+            elseif bat_perc > 15 then
+                batbar:set_color(beautiful.fg_normal)
+                baticon:set_image(beautiful.bat_low)
+            else
+                batbar:set_color(red)
+                baticon:set_image(beautiful.bat_no)
+            end
         end
-
-        widget:set_markup(markup(blue, bat_header) .. bat_p)
+        batbar:set_value(bat_perc / 100)
     end
 })
+batwidget = wibox.widget.background(batmargin)
+batwidget:set_bgimage(beautiful.widget_bg)
+
+-- /home fs
+diskicon = wibox.widget.imagebox(beautiful.disk)
+diskbar = awful.widget.progressbar()
+diskbar:set_color(beautiful.fg_normal)
+diskbar:set_width(55)
+diskbar:set_ticks(true)
+diskbar:set_ticks_size(6)
+diskbar:set_background_color(beautiful.bg_normal)
+diskmargin = wibox.layout.margin(diskbar, 2, 7)
+diskmargin:set_top(6)
+diskmargin:set_bottom(6)
+fshomeupd = lain.widgets.fs({
+    partition = "/home",
+    settings  = function()
+        if fs_now.used < 90 then
+            diskbar:set_color(beautiful.fg_normal)
+        else
+            diskbar:set_color("#EB8F8F")
+        end
+        diskbar:set_value(fs_now.used / 100)
+    end
+})
+diskwidget = wibox.widget.background(diskmargin)
+diskwidget:set_bgimage(beautiful.widget_bg)
 
 -- ALSA volume bar
-myvolumebar = lain.widgets.alsabar({
-    card   = "0",
-    ticks  = true,
-    width  = 80,
-    height = 10,
-    colors = {
-        background = "#383838",
-        unmute     = "#80CCE6",
-        mute       = "#FF9F9F"
-    },
-    notifications = {
-        font      = "Tamsyn",
-        font_size = "12",
-        bar_size  = 32
-    }
-})
-alsamargin = wibox.layout.margin(myvolumebar.bar, 5, 8, 80)
-wibox.layout.margin.set_top(alsamargin, 12)
-wibox.layout.margin.set_bottom(alsamargin, 12)
-volumewidget = wibox.widget.background()
-volumewidget:set_widget(alsamargin)
+volicon = wibox.widget.imagebox(beautiful.vol)
+volume = lain.widgets.alsabar({width = 55, ticks = true, ticks_size = 6, step = "2%",
+settings = function()
+    if volume_now.status == "off" then
+        volicon:set_image(beautiful.vol_mute)
+    elseif volume_now.level == 0 then
+        volicon:set_image(beautiful.vol_no)
+    elseif volume_now.level <= 50 then
+        volicon:set_image(beautiful.vol_low)
+    else
+        volicon:set_image(beautiful.vol)
+    end
+end,
+colors =
+{
+    background = beautiful.bg_normal,
+    mute = red,
+    unmute = beautiful.fg_normal
+}})
+volmargin = wibox.layout.margin(volume.bar, 2, 7)
+volmargin:set_top(6)
+volmargin:set_bottom(6)
+volumewidget = wibox.widget.background(volmargin)
 volumewidget:set_bgimage(beautiful.widget_bg)
-
--- CPU
-cpu_widget = lain.widgets.cpu({
-    settings = function()
-        widget:set_markup(space3 .. "CPU " .. cpu_now.usage
-                          .. "%" .. markup.font("Tamsyn 5", " "))
-    end
-})
-cpuwidget = wibox.widget.background()
-cpuwidget:set_widget(cpu_widget)
-cpuwidget:set_bgimage(beautiful.widget_bg)
-cpu_icon = wibox.widget.imagebox()
-cpu_icon:set_image(beautiful.cpu)
-
--- Net
-netdown_icon = wibox.widget.imagebox()
-netdown_icon:set_image(beautiful.net_down)
-netup_icon = wibox.widget.imagebox()
-netup_icon:set_image(beautiful.net_up)
-netwidget = lain.widgets.net({
-    settings = function()
-        widget:set_markup(markup.font("Tamsyn 1", " ") .. net_now.received .. " - "
-                          .. net_now.sent .. space2)
-    end
-})
-networkwidget = wibox.widget.background()
-networkwidget:set_widget(netwidget)
-networkwidget:set_bgimage(beautiful.widget_bg)
 
 -- Weather
 myweather = lain.widgets.weather({
@@ -290,29 +276,12 @@ myweather = lain.widgets.weather({
 })
 
 -- Separators
-first = wibox.widget.textbox('<span font="Tamsyn 4"> </span>')
-last = wibox.widget.imagebox()
-last:set_image(beautiful.last)
-spr = wibox.widget.imagebox()
-spr:set_image(beautiful.spr)
-spr_small = wibox.widget.imagebox()
-spr_small:set_image(beautiful.spr_small)
-spr_very_small = wibox.widget.imagebox()
-spr_very_small:set_image(beautiful.spr_very_small)
-spr_right = wibox.widget.imagebox()
-spr_right:set_image(beautiful.spr_right)
-spr_bottom_right = wibox.widget.imagebox()
-spr_bottom_right:set_image(beautiful.spr_bottom_right)
-spr_left = wibox.widget.imagebox()
-spr_left:set_image(beautiful.spr_left)
-bar = wibox.widget.imagebox()
-bar:set_image(beautiful.bar)
-bottom_bar = wibox.widget.imagebox()
-bottom_bar:set_image(beautiful.bottom_bar)
+spr = wibox.widget.textbox(' ')
+small_spr = wibox.widget.textbox('<span font="Tamsyn 4"> </span>')
+bar_spr = wibox.widget.textbox('<span font="Tamsyn 3"> </span>' .. markup("#333333", "|") .. '<span font="Tamsyn 3"> </span>')
 
 -- Create a wibox for each screen and add it
 mywibox = {}
-mybottomwibox = {}
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -377,78 +346,42 @@ for s = 1, screen.count() do
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 32 })
+    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 18 })
 
-    -- Widgets that are aligned to the upper left
+    -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
-    left_layout:add(first)
-    left_layout:add(mytaglist[s])
-    left_layout:add(spr_small)
+    left_layout:add(small_spr)
     left_layout:add(mylayoutbox[s])
+    left_layout:add(bar_spr)
+    left_layout:add(mytaglist[s])
+    left_layout:add(spr)
     left_layout:add(mypromptbox[s])
 
-    -- Widgets that are aligned to the upper right
+    -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(small_spr)
+    right_layout:add(mpdicon)
+    right_layout:add(mpdwidget)
     --right_layout:add(mailwidget)
+    right_layout:add(baticon)
     right_layout:add(batwidget)
-    right_layout:add(spr_right)
-    right_layout:add(prev_icon)
-    right_layout:add(next_icon)
-    right_layout:add(stop_icon)
-    right_layout:add(play_pause_icon)
-    right_layout:add(bar)
-    right_layout:add(mpd_icon)
-    right_layout:add(musicwidget)
-    right_layout:add(bar)
-    right_layout:add(spr_very_small)
+    right_layout:add(bar_spr)
+    right_layout:add(diskicon)
+    right_layout:add(diskwidget)
+    right_layout:add(bar_spr)
+    right_layout:add(volicon)
     right_layout:add(volumewidget)
-    right_layout:add(spr_left)
+    right_layout:add(bar_spr)
+    right_layout:add(mytextclock)
 
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
     layout:set_left(left_layout)
+    layout:set_middle(mytasklist[s])
     layout:set_right(right_layout)
 
     mywibox[s]:set_widget(layout)
-
-    -- Create the bottom wibox
-    mybottomwibox[s] = awful.wibox({ position = "bottom", screen = s, border_width = 0, height = 32 })
-
-    -- Widgets that are aligned to the bottom left
-    bottom_left_layout = wibox.layout.fixed.horizontal()
-    bottom_left_layout:add(mylauncher)
-
-    -- Widgets that are aligned to the bottom right
-    bottom_right_layout = wibox.layout.fixed.horizontal()
-    bottom_right_layout:add(spr_bottom_right)
-    bottom_right_layout:add(netdown_icon)
-    bottom_right_layout:add(networkwidget)
-    bottom_right_layout:add(netup_icon)
-    bottom_right_layout:add(bottom_bar)
-    bottom_right_layout:add(cpu_icon)
-    bottom_right_layout:add(cpuwidget)
-    bottom_right_layout:add(bottom_bar)
-    bottom_right_layout:add(calendar_icon)
-    bottom_right_layout:add(calendarwidget)
-    bottom_right_layout:add(bottom_bar)
-    bottom_right_layout:add(clock_icon)
-    bottom_right_layout:add(clockwidget)
-    bottom_right_layout:add(last)
-
-    -- Now bring it all together (with the tasklist in the middle)
-    bottom_layout = wibox.layout.align.horizontal()
-    bottom_layout:set_left(bottom_left_layout)
-    bottom_layout:set_middle(mytasklist[s])
-    bottom_layout:set_right(bottom_right_layout)
-    mybottomwibox[s]:set_widget(bottom_layout)
-
-    -- Set proper backgrounds, instead of beautiful.bg_normal
-    mywibox[s]:set_bg(beautiful.topbar_path .. math.floor((screen[mouse.screen].workarea.width)) .. ".png")
-    mybottomwibox[s]:set_bg("#242424")
-
-    -- Create a borderbox above the bottomwibox
-    lain.widgets.borderbox(mybottomwibox[s], s, { position = "top", color = "#0099CC" } )
 end
 -- }}}
 
@@ -518,12 +451,14 @@ globalkeys = awful.util.table.join(
     -- Show/Hide Wibox
     awful.key({ modkey }, "b", function ()
         mywibox[mouse.screen].visible = not mywibox[mouse.screen].visible
-        mybottomwibox[mouse.screen].visible = not mybottomwibox[mouse.screen].visible
     end),
 
     -- On the fly useless gaps change
     awful.key({ altkey, "Control" }, "+", function () lain.util.useless_gaps_resize(1) end),
     awful.key({ altkey, "Control" }, "-", function () lain.util.useless_gaps_resize(-1) end),
+
+    -- Rename tag
+    awful.key({ altkey, "Shift"   }, "r", function () lain.util.rename_tag(mypromptbox) end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
@@ -558,28 +493,29 @@ globalkeys = awful.util.table.join(
 
     -- Widgets popups
     awful.key({ altkey,           }, "c",      function () lain.widgets.calendar:show(7) end),
+    awful.key({ altkey,           }, "h",      function () fshomeupd.show(7) end),
     awful.key({ altkey,           }, "w",      function () myweather.show(7) end),
 
     -- ALSA volume control
     awful.key({ altkey }, "Up",
         function ()
-            os.execute(string.format("amixer set %s %s+", myvolumebar.channel, myvolumebar.step))
-            myvolumebar.update()
+            os.execute(string.format("amixer set %s %s+", volume.channel, volume.step))
+            volume.update()
         end),
     awful.key({ altkey }, "Down",
         function ()
-            os.execute(string.format("amixer set %s %s-", myvolumebar.channel, myvolumebar.step))
-            myvolumebar.update()
+            os.execute(string.format("amixer set %s %s-", volume.channel, volume.step))
+            volume.update()
         end),
     awful.key({ altkey }, "m",
         function ()
-            os.execute(string.format("amixer set %s toggle", myvolumebar.channel))
-            myvolumebar.update()
+            os.execute(string.format("amixer set %s toggle", volume.channel))
+            volume.update()
         end),
     awful.key({ altkey, "Control" }, "m",
         function ()
-            os.execute(string.format("amixer set %s 100%%", myvolumebar.channel))
-            myvolumebar.update()
+            os.execute(string.format("amixer set %s 100%%", volume.channel))
+            volume.update()
         end),
 
     -- MPD control
@@ -625,6 +561,7 @@ globalkeys = awful.util.table.join(
 )
 
 clientkeys = awful.util.table.join(
+    awful.key({ altkey, "Shift"   }, "m",      lain.util.magnify_client                         ),
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
@@ -645,7 +582,7 @@ clientkeys = awful.util.table.join(
 )
 
 -- Bind all key numbers to tags.
--- be careful: we use keycodes to make it works on any keyboard layout.
+-- Be careful: we use keycodes to make it works on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 9 do
     globalkeys = awful.util.table.join(globalkeys,
@@ -724,7 +661,7 @@ awful.rules.rules = {
           properties = { tag = tags[1][1] } },
 
 	  { rule = { class = "Gimp" },
-     	    properties = { tag = tags[1][4] } },
+     	    properties = { tag = tags[1][3] } },
 
     { rule = { class = "Gimp", role = "gimp-image-window" },
           properties = { maximized_horizontal = true,
@@ -748,7 +685,7 @@ client.connect_signal("manage", function (c, startup)
          end
      end)
 
-    local titlebars_enabled = false
+    local titlebars_enabled = true
     if titlebars_enabled and (c.type == "normal" or c.type == "dialog") then
         -- buttons for the titlebar
         local buttons = awful.util.table.join(
