@@ -1,4 +1,3 @@
-source ~/.zshrc
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 xbindkeys
 /usr/bin/start-pulseaudio-x11 &
