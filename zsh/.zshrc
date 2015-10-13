@@ -53,7 +53,7 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
-
+eval `dircolors ~/.dir_colors`
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
