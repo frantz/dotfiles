@@ -50,6 +50,7 @@ end
 
 run_once("urxvtd")
 run_once("unclutter -root")
+run_once("nm-applet")
 -- }}}
 
 -- {{{ Variable definitions
