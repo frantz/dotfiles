@@ -84,6 +84,7 @@ export TERM=rxvt-unicode-256color
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias gti=git
+alias lvim='vim -c "normal '\''0"'
 
 # Keychain to remember ssh passphrase: pacman -S keychain
 eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
