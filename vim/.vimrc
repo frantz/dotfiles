@@ -63,6 +63,7 @@ let g:neocomplete#enable_at_startup = 1
 " NERDTree settings
 autocmd vimenter * NERDTree
 map <C-z> :NERDTreeToggle<CR>
+map <leader>f :NERDTreeFind<CR>
 set laststatus=2
 
 set mouse=a
