@@ -69,6 +69,7 @@ export LC_CTYPE=en_US.UTF-8
 
 export EDITOR='vim'
 export TERM=rxvt-unicode-256color
+export PAGER='most'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
