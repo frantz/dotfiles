@@ -1,8 +1,15 @@
 URxvt*depth: 32
 URxvt*dynamicColors: true
 
-! URxvt*font: xft:Sauce Code Powerline:size=10
-URxvt*font: xft:Droid Sans Mono Slashed for Powerline:size=12
+URxvt.font: xft:DejaVu Sans Mono for Powerline Plus Nerd File Types Mono:size=12:antialias=true:hinting=true,\
+            xft:Terminess Powerline:antialias=true:hinting=true,\
+            xft:Symbola
+URxvt.boldFont: xft:DejaVu Sans Mono for Powerline Plus Nerd File Types Mono:bold:size=12:antialias=true:hinting=true,\
+                xft:Terminess Powerline:antialias=true:hinting=true,\
+                xft:Symbola
+URxvt.italicFont: xft:DejaVu Sans Mono for Powerline Plus Nerd File Types Mono:oblique:size=12:antialias=true:hinting=true,\
+                  xft:Terminess Powerline:antialias=true:hinting=true,\
+                  xft:Symbola
 
 URxvt*scrollBar: False
 
