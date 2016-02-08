@@ -82,12 +82,12 @@ local layouts = {
 -- }}}
 
 -- {{{ Tags
-tags = {
-   names = { " WEB ", " TERMINAL ", " FILES ", " OTHER " },
-   layout = { layouts[1], layouts[3], layouts[2], layouts[4] }
-}
-for s = 1, screen.count() do
-   tags[s] = awful.tag(tags.names, s, tags.layout)
+tags = {}
+if screen.count() == 1 then
+	tags[1] = awful.tag({" I ", " II ", " III ", " IV ", " V ", " VI ", " VII "}, 1, layouts[2]) 
+elseif screen.count() == 2 then
+	tags[1] = awful.tag({" I ", " II ", " III ", " IV "}, 1, layouts[2]) 
+	tags[2] = awful.tag({" V ", " VI ", " VII ", " VIII "}, 2, layouts[2]) 
 end
 -- }}}
 
