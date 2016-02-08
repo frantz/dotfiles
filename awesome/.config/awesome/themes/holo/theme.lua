@@ -10,8 +10,7 @@ theme                               = {}
 
 theme.icon_dir                      = os.getenv("HOME") .. "/.config/awesome/themes/holo/icons"
 
-theme.wallpaper                     = os.getenv("HOME") .. "/.config/awesome/themes/holo/blade_runner11.jpg"
-
+theme.wallpaper                     = os.getenv("HOME") .. "/.config/awesome/themes/holo/screenshot01.png"
 theme.topbar_path                   = "png:" .. theme.icon_dir .. "/topbar/"
 
 theme.font                          = "Tamsyn 10.5"
