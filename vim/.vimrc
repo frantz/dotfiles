@@ -10,17 +10,11 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-Plugin 'L9'
+Plugin 'tpope/vim-surround'
 Plugin 'taglist-plus'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'ryanoasis/vim-devicons'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
@@ -28,7 +22,8 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'sjl/gundo.vim'
 " pacman -S the_silver_searcher
 Plugin 'rking/ag.vim'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'pangloss/vim-javascript'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mattn/emmet-vim'
@@ -56,7 +51,19 @@ filetype plugin indent on    " required
 syntax on
 filetype indent on
 
+set encoding=utf8
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ Mono\ Plus\ Font\ Awesome\ Plus\ Octicons\ Plus\ Pomicons\ 12
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
+set guioptions-=r  "remove right-hand scroll bar
+set guioptions-=L  "remove left-hand scroll bar
+
+let g:WebDevIconsNerdTreeGitPluginForceVAlign = 1
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
+
 set omnifunc=syntaxcomplete#Complete
+
+set showtabline=0
 
 let g:neocomplete#enable_at_startup = 1
 
@@ -82,6 +89,7 @@ set undodir=~/.vim/undo//
 map <leader>e :e! ~/.vimrc<cr>
 autocmd! bufwritepost .vimrc source ~/.vimrc
 
+autocmd FileType html setlocal shiftwidth=2 tabstop=2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -173,10 +181,11 @@ nnoremap <leader>a :Ag
 " Airline setup
 let g:airline_powerline_fonts = 1
 let g:airline_theme='solarized'
-let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#enabled = 1
 
-" let g:user_emmet_leader_key='<C-Q>'
-nnoremap <leader><tab> :b#<CR>
+" Emmet setup
+let g:user_emmet_leader_key='<C-Y>'
+autocmd FileType html,xhtml,tt2,tt2html,css,swig imap <buffer> <Tab> <C-Y>, | imap <buffer> <C-N> <C-Y>n
 
 " Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
 nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
