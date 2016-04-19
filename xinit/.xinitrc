@@ -1,6 +1,7 @@
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 xbindkeys
 /usr/bin/start-pulseaudio-x11 &
+mopidy -q &
 compton --backend glx --paint-on-overlay --vsync opengl-swc -b
 srandrd ~/.config/detect_displays.sh
 xscreensaver -no-splash &
