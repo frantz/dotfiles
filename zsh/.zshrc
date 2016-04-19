@@ -47,7 +47,7 @@ ZSH_THEME="budspencer"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git z archlinux systemd vi-mode node nyan)
 # pacman -S zsh-syntax-highlighting 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # User configuration
 
