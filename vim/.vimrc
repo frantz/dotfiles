@@ -33,7 +33,8 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'skammer/vim-css-color'
 Plugin 'kien/ctrlp.vim'
 Plugin 'Shougo/neocomplete.vim'
-Plugin 'Slava/vim-spacebars'
+Plugin 'Konfekt/FastFold'
+Plugin 'ibotdotout/vimrc-custom'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
