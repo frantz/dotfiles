@@ -45,7 +45,7 @@ ZSH_THEME="budspencer"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z archlinux bundler systemd vi-mode)
+plugins=(git z archlinux systemd vi-mode node nyan)
 # pacman -S zsh-syntax-highlighting 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
