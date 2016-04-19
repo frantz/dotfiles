@@ -35,6 +35,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'Konfekt/FastFold'
 Plugin 'ibotdotout/vimrc-custom'
+Plugin 'mxw/vim-jsx'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -193,3 +194,6 @@ nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
 nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
 nnoremap <silent><S-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><S-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
+
+" Allow JSX in .js files
+let g:jsx_ext_required = 0 
