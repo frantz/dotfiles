@@ -68,11 +68,17 @@ set omnifunc=syntaxcomplete#Complete
 
 set showtabline=0
 
+set backupcopy=yes "play nice with file watchers
+
 let g:neocomplete#enable_at_startup = 1
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
 " NERDTree settings
 autocmd vimenter * NERDTree
-map <C-z> :NERDTreeToggle<CR>
+map <C-bslash> :NERDTreeToggle<CR>
 map <leader>f :NERDTreeFind<CR>
 set laststatus=2
 
