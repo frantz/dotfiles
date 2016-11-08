@@ -12,6 +12,7 @@ Plugin 'gmarik/Vundle.vim'
 
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
 Plugin 'taglist-plus'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'ryanoasis/vim-devicons'
