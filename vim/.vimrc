@@ -215,4 +215,7 @@ nnoremap <silent><S-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><S-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
 " Allow JSX in .js files
-let g:jsx_ext_required = 0 
+let g:jsx_ext_required = 0
+
+" Persistent macros
+let @r = "yiwiconst A = require('p$"
