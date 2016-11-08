@@ -98,7 +98,19 @@ set undodir=~/.vim/undo//
 map <leader>e :e! ~/.vimrc<cr>
 autocmd! bufwritepost .vimrc source ~/.vimrc
 
-autocmd FileType html setlocal shiftwidth=2 tabstop=2
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Two spaces indent
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set smarttab
+set shiftwidth=2
+set tabstop=2
+set shiftround
+
+" converting tabs to space before writing a file
+set expandtab
+autocmd! bufwritepre * set expandtab | retab! 2
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
