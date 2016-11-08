@@ -206,7 +206,7 @@ let g:airline_theme='solarized'
 
 " Emmet setup
 let g:user_emmet_leader_key='<C-Y>'
-autocmd FileType html,xhtml,tt2,tt2html,css,swig imap <buffer> <Tab> <C-Y>, | imap <buffer> <C-N> <C-Y>n
+autocmd FileType html,xhtml,tt2,tt2html,css,swig,js imap <buffer> <Tab> <C-Y>, | imap <buffer> <C-N> <C-Y>n
 
 " Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
 nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
