@@ -219,3 +219,6 @@ let g:jsx_ext_required = 0
 
 " Persistent macros
 let @r = "yiwiconst A = require('p$"
+
+" Fix bug: no redraw when switching tags on Awesomewm
+" autocmd FocusGained * :redraw!
