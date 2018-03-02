@@ -9,3 +9,5 @@
 	default = simple
 [color]
 	ui = auto
+[core]
+	excludesfile = /home/frantz/.gitignore_global
