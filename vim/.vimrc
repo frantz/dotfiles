@@ -12,6 +12,7 @@ Plugin 'gmarik/Vundle.vim'
 
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
 Plugin 'taglist-plus'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'ryanoasis/vim-devicons'
@@ -31,7 +32,7 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'skammer/vim-css-color'
-Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'Konfekt/FastFold'
 Plugin 'ibotdotout/vimrc-custom'
@@ -67,11 +68,17 @@ set omnifunc=syntaxcomplete#Complete
 
 set showtabline=0
 
+set backupcopy=yes "play nice with file watchers
+
 let g:neocomplete#enable_at_startup = 1
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
 " NERDTree settings
 autocmd vimenter * NERDTree
-map <C-z> :NERDTreeToggle<CR>
+map <C-bslash> :NERDTreeToggle<CR>
 map <leader>f :NERDTreeFind<CR>
 set laststatus=2
 
@@ -91,7 +98,19 @@ set undodir=~/.vim/undo//
 map <leader>e :e! ~/.vimrc<cr>
 autocmd! bufwritepost .vimrc source ~/.vimrc
 
-autocmd FileType html setlocal shiftwidth=2 tabstop=2
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Two spaces indent
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set smarttab
+set shiftwidth=2
+set tabstop=2
+set shiftround
+
+" converting tabs to space before writing a file
+set expandtab
+autocmd! bufwritepre * set expandtab | retab! 2
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -187,7 +206,7 @@ let g:airline_theme='solarized'
 
 " Emmet setup
 let g:user_emmet_leader_key='<C-Y>'
-autocmd FileType html,xhtml,tt2,tt2html,css,swig imap <buffer> <Tab> <C-Y>, | imap <buffer> <C-N> <C-Y>n
+autocmd FileType html,xhtml,tt2,tt2html,css,swig,js imap <buffer> <Tab> <C-Y>, | imap <buffer> <C-N> <C-Y>n
 
 " Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
 nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
@@ -196,4 +215,10 @@ nnoremap <silent><S-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><S-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
 " Allow JSX in .js files
-let g:jsx_ext_required = 0 
+let g:jsx_ext_required = 0
+
+" Persistent macros
+let @r = "yiwiconst A = require('p$"
+
+" Fix bug: no redraw when switching tags on Awesomewm
+" autocmd FocusGained * :redraw!
