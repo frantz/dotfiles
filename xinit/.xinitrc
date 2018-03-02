@@ -12,4 +12,5 @@ mopidy -q &
 compton --backend glx --paint-on-overlay --vsync opengl-swc -b
 srandrd ~/.config/detect_displays.sh
 xscreensaver -no-splash &
-exec /usr/bin/awesome >> ~/.cache/awesome/stdout 2>> ~/.cache/awesome/stderr
+nm-applet &
+exec /usr/bin/awesome --no-argb  >> ~/.cache/awesome/stdout 2>> ~/.cache/awesome/stderr
