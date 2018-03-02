@@ -62,7 +62,7 @@ set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 
 let g:WebDevIconsNerdTreeGitPluginForceVAlign = 1
-let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 
 set omnifunc=syntaxcomplete#Complete
 
@@ -78,6 +78,7 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
 " NERDTree settings
 autocmd vimenter * NERDTree
+autocmd FileType nerdtree setlocal nolist " https://github.com/ryanoasis/vim-devicons/issues/133
 map <C-bslash> :NERDTreeToggle<CR>
 map <leader>f :NERDTreeFind<CR>
 set laststatus=2
