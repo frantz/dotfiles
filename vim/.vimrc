@@ -233,3 +233,6 @@ let @r = "yiwiconst A = require('p$"
 
 " Fix bug: no redraw when switching tags on Awesomewm
 " autocmd FocusGained * :redraw!
+
+" ctrlp ignores
+let g:ctrlp_custom_ignore = 'node_modules'
