@@ -78,6 +78,10 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType javascript setlocal omnifunc=tern#Complete
 
+" Default linter
+let g:syntastic_javascript_standard_exe = 'standard'
+let g:syntastic_javascript_checkers = ['standard']
+
 " NERDTree settings
 autocmd vimenter * NERDTree
 autocmd FileType nerdtree setlocal nolist " https://github.com/ryanoasis/vim-devicons/issues/133
