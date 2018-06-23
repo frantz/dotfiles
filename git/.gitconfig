@@ -1,13 +1,14 @@
 [alias]
-	co = checkout
-	st = status
-	ci = commit
+  co = checkout
+  st = status
+  ci = commit
+  di = diff -- . ':(exclude)package-lock.json'
 [user]
-	name = Frantz Gauthier
-	email = frantz@myentropy.org
+  name = Frantz Gauthier
+  email = frantz@myentropy.org
 [push]
-	default = simple
+  default = simple
 [color]
-	ui = auto
+  ui = auto
 [core]
-	excludesfile = /home/frantz/.gitignore_global
+  excludesfile = /home/frantz/.gitignore_global
