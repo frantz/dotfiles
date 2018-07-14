@@ -33,7 +33,15 @@ Plugin 'marijnh/tern_for_vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'skammer/vim-css-color'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'Shougo/neocomplete.vim'
+
+if has('nvim')
+  Plugin 'Shougo/deoplete.nvim'
+else
+  Plugin 'Shougo/deoplete.nvim'
+  Plugin 'roxma/nvim-yarp'
+  Plugin 'roxma/vim-hug-neovim-rpc'
+endif
+
 Plugin 'Konfekt/FastFold'
 Plugin 'ibotdotout/vimrc-custom'
 Plugin 'mxw/vim-jsx'
@@ -71,7 +79,7 @@ set showtabline=0
 
 set backupcopy=yes "play nice with file watchers
 
-let g:neocomplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
